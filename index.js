@@ -1,10 +1,16 @@
-var express = required('express');
+const app = required('express')();
 require('dotenv').config();
-var app = express();
+const port = process.env.PORT || 5000;
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
+mongoose.connect(process.env.DATABASE,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
 
-app.get('/', (request, response) => {
+app.get(port, (request, response) => {
   request.send('Hi there!');
 })
