@@ -1,7 +1,8 @@
-const app = required('express')();
+const app = require('express')();
 require('dotenv').config();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 6000;
 const mongoose = require('mongoose');
+console.log(process.env)
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE,
@@ -11,6 +12,6 @@ mongoose.connect(process.env.DATABASE,
     useCreateIndex: true,
   })
 
-app.get(port, (request, response) => {
-  request.send('Hi there!');
+app.listen(port, (request, response) => {
+  console.log(`Running and healthy on port: {port}`)
 })
