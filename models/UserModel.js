@@ -1,5 +1,8 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const SALT = 10;
 
 const userSchema = mongoose.schema({
   email: {
@@ -32,5 +35,25 @@ const userSchema = mongoose.schema({
   token: {
     type: String,
 
+  }
+});
+
+userSchema.pre('save', (next) => {
+  var user = this;
+  if user.isModified('password') {
+    bcrypt.genSalt(SALT, (err, salt) => {
+      if (err) {
+        return next(err);
+      }
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        if (err) {
+          return next(err)
+        }
+        user.password = hash;
+        next();
+      });
+    });
+  } else {
+    next();
   }
 });
