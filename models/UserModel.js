@@ -57,3 +57,42 @@ userSchema.pre('save', (next) => {
     next();
   }
 });
+
+userSchema.methods.comparePassword = (candidatePassword, callback) => {
+  bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
+    if (err) {
+      return callback(err);
+    }
+    callback(null, isMatch);
+  });
+}
+
+userSchema.methods.generateToken = (callback) => {
+  var user = this;
+  var token = jwt.sign(user._id.toHexString(), process.env.SECRET);
+  user.token = token;
+  user.save((err, user) => {
+    if (err) {
+      callback(err);
+    }
+    callback(null, user);
+  });
+}
+
+userSchema.statics.findByToken = (token, callback) => {
+  var user = this;
+  jwt.verify(token, process.env.SECRET, (err, decode) => {
+    user.findOne({
+      '_id': decode,
+      'token': token,
+    }, (err ,user) => {
+      if (err) {
+        return callback(err);
+      }
+      callback(null, user);
+    });
+  });
+}
+
+const User = mongoose.model('User', userSchema);
+module.exports = { User };
