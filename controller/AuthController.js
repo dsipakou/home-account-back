@@ -19,7 +19,7 @@ exports.RegisterUser = async (request, response) => {
   });
 }
 
-exports.LoginUser = async (request, response) => {
+exports.LoginUser = (request, response) => {
   User.findOne({email: request.body.email}, (error, user) => {
     if (!user) {
       return response.status(404).json({message: 'Email not found!'})
@@ -47,4 +47,25 @@ exports.LoginUser = async (request, response) => {
       });
     });
   });
+}
+
+exports.LogoutUser = (request, response) => {
+  User.findByIdAndUpdate({
+    _id: request.user._id
+  },
+    {
+      token: ''
+    }),
+    (error) => {
+      if (error) {
+        return response.status(400).json({
+          success: false,
+          message: error
+        })
+      }
+      return response.status(200).json({
+        success: true,
+        message: 'User logged out',
+      });
+    }
 }

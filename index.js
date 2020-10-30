@@ -2,8 +2,15 @@ const app = require('express')();
 require('dotenv').config();
 const port = process.env.PORT || 6000;
 const mongoose = require('mongoose');
-console.log(process.env)
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
+
+const { auth } = require('./middleware/auth');
+const { RegisterUser, LoginUser } = require('./controller/AuthController');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE,
   {
@@ -13,5 +20,8 @@ mongoose.connect(process.env.DATABASE,
   })
 
 app.listen(port, (request, response) => {
-  console.log(`Running and healthy on port: {port}`)
+  console.log(`Running and healthy on port: ${port}`)
 })
+
+app.post('/api/users/register', RegisterUser);
+app.post('/api/users/login', LoginUser);
