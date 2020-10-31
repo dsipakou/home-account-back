@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const SALT = 10;
 
-const userSchema = mongoose.schema({
+const userSchema = mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Email is required field'],
