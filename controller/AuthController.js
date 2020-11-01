@@ -53,19 +53,29 @@ exports.LogoutUser = (request, response) => {
   User.findByIdAndUpdate({
     _id: request.user._id
   },
-    {
-      token: ''
-    }),
-    (error) => {
-      if (error) {
-        return response.status(400).json({
-          success: false,
-          message: error
-        })
-      }
-      return response.status(200).json({
-        success: true,
-        message: 'User logged out',
-      });
+  {
+    token: ''
+  }),
+  (error) => {
+    if (error) {
+      return response.status(400).json({
+        success: false,
+        message: error
+      })
     }
+    return response.status(200).json({
+      success: true,
+      message: 'User logged out',
+    });
+  }
 }
+
+exports.getUserDetails = (request, response) => {
+  return response.status(200).json({
+    isAuth: true,
+    firstName: request.user.firstName,
+    lastName: request.user.lastName,
+    email: request.user.email,
+  })
+}
+

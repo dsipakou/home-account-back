@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const { auth } = require('./middleware/auth');
-const { RegisterUser, LoginUser } = require('./controller/AuthController');
+const { RegisterUser, LoginUser, getUserDetails, LogoutUser } = require('./controller/AuthController');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE,
   {
@@ -24,5 +24,8 @@ app.listen(port, (request, response) => {
   console.log(`Running and healthy on port: ${port}`)
 })
 
-app.post('/api/users/register', RegisterUser);
-app.post('/api/users/login', LoginUser);
+app.post('/api/users/register',RegisterUser);
+app.post('/api/users/login',LoginUser);
+app.get('/api/users/auth', getUserDetails);
+app.get('/api/users/logout', LogoutUser);
+
