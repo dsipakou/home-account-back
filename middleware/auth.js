@@ -16,4 +16,4 @@ const auth = (request, response, next) => {
   });
 }
 
-module.export = { auth }
+module.exports = auth

@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const app = require('express')();
-const port = process.env.PORT || 6000;
+const port = process.env.PORT || 1010;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -10,7 +10,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-const { auth } = require('./middleware/auth');
+const auth = require('./middleware/auth');
+console.log(auth)
 const { RegisterUser, LoginUser, getUserDetails, LogoutUser } = require('./controller/AuthController');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE,
@@ -20,12 +21,14 @@ mongoose.connect(process.env.DATABASE,
     useCreateIndex: true,
   })
 
-app.listen(port, (request, response) => {
+app.listen(port, (req, res) => {
   console.log(`Running and healthy on port: ${port}`)
 })
 
-app.post('/api/users/register',RegisterUser);
-app.post('/api/users/login',LoginUser);
-app.get('/api/users/auth', getUserDetails);
-app.get('/api/users/logout', LogoutUser);
-
+app.post('/api/users/register', RegisterUser);
+app.post('/api/users/login', LoginUser);
+app.get('/api/users/auth', auth, getUserDetails);
+app.get('/api/users/logout', auth, LogoutUser);
+app.get('/', (req, res) => {
+  res.send('hello');
+})
