@@ -1,12 +1,14 @@
 require('dotenv').config();
 
 const app = require('express')();
+const cors = require('cors');
 const port = process.env.PORT || 1010;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
 app.use(cookieParser());
+app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
