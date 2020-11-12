@@ -24,7 +24,7 @@ mongoose.connect(process.env.DATABASE,
     useCreateIndex: true,
   })
 
-app.use('api/users', usersRoutes);
+app.use('/api/users', usersRoutes);
 
 console.log(app);
 
