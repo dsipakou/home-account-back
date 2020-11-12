@@ -39,7 +39,7 @@ exports.LoginUser = (request, response) => {
           email: user.email,
           token: user.token,
         }
-        response.cookie('authToken', user.token).status(200).json({
+        response.cookie('authToken', user.token).status(200).send({
           success: true,
           message: 'User logged in',
           userData,

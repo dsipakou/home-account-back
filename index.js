@@ -7,13 +7,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
+const usersRoutes = require('./routes/users');
+
 app.use(cookieParser());
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 const auth = require('./middleware/auth');
-console.log(auth)
 const { RegisterUser, LoginUser, getUserDetails, LogoutUser } = require('./controller/AuthController');
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE,
@@ -23,14 +24,14 @@ mongoose.connect(process.env.DATABASE,
     useCreateIndex: true,
   })
 
+app.use('api/users', usersRoutes);
+
+console.log(app);
+
 app.listen(port, (req, res) => {
   console.log(`Running and healthy on port: ${port}`)
 })
 
-app.post('/api/users/register', RegisterUser);
-app.post('/api/users/login', LoginUser);
-app.get('/api/users/auth', auth, getUserDetails);
-app.get('/api/users/logout', auth, LogoutUser);
 app.get('/', (req, res) => {
   res.send('hello');
 })
