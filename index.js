@@ -10,7 +10,10 @@ const cookieParser = require('cookie-parser');
 const usersRoutes = require('./routes/users');
 
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  credentials: true,
+}
+));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
