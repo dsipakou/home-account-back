@@ -37,5 +37,5 @@ app.listen(port, (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  console.log(req.cookies);
+  console.log(req.cookie);
 })
