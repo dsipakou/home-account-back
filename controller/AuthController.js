@@ -40,9 +40,8 @@ exports.LoginUser = (request, response) => {
           token: user.token,
         }
         response.cookie('authToken', user.token, {
-          domain: 'localhost:8080',
+          domain: '127.0.0.1',
           maxAge: 1000 * 60 * 60,
-          httpOnly: true,
         }).status(200).send({
           success: true,
           message: 'User logged in',

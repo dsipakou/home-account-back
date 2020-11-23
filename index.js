@@ -12,6 +12,7 @@ const usersRoutes = require('./routes/users');
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
+  origin: 'http://localhost:8080'
 }
 ));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -36,5 +37,5 @@ app.listen(port, (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  res.send('hello');
+  console.log(req.cookies);
 })
