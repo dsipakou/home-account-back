@@ -20,6 +20,9 @@ exports.RegisterUser = async (request, response) => {
 }
 
 exports.LoginUser = (request, response) => {
+  if (request.cookies) {
+    console.log(request.cookies.token)
+  }
   User.findOne({email: request.body.email}, (error, user) => {
     if (!user) {
       return response.status(404).json({message: 'Email not found!'})
@@ -39,8 +42,7 @@ exports.LoginUser = (request, response) => {
           email: user.email,
           token: user.token,
         }
-        response.cookie('authToken', user.token, {
-          domain: '127.0.0.1',
+        response.cookie('token', user.token, { domain: '127.0.0.1',
           maxAge: 1000 * 60 * 60 * 24,
         }).status(200).send({
           success: true,

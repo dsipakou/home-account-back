@@ -37,6 +37,6 @@ app.listen(port, (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  console.log(`Cookies are ${req.cookies.authToken}`);
-  res.send(req.cookies.authToken);
+  console.log(`Cookies are ${req.cookies.token}`);
+  res.send(req.cookies.token);
 })
