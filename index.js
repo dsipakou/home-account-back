@@ -12,7 +12,7 @@ const usersRoutes = require('./routes/users');
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: 'http://localhost:8080'
+  origin: 'http://localhost:8080',
 }
 ));
 app.use(bodyParser.urlencoded({extended: true}));
@@ -37,5 +37,6 @@ app.listen(port, (req, res) => {
 })
 
 app.get('/', (req, res) => {
-  console.log(req.cookie);
+  console.log(`Cookies are ${req.cookies.authToken}`);
+  res.send(req.cookies.authToken);
 })

@@ -41,7 +41,7 @@ exports.LoginUser = (request, response) => {
         }
         response.cookie('authToken', user.token, {
           domain: '127.0.0.1',
-          maxAge: 1000 * 60 * 60,
+          maxAge: 1000 * 60 * 60 * 24,
         }).status(200).send({
           success: true,
           message: 'User logged in',
