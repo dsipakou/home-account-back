@@ -75,7 +75,12 @@ exports.LogoutUser = (request, response) => {
   }
 }
 
+exports.checkAuth = (req, res) => {
+  console.log(req.cookies.token)
+}
+
 exports.getUserDetails = (request, response) => {
+  console.log(request.cookies.token)
   return response.status(200).json({
     isAuth: true,
     firstName: request.user.firstName,
