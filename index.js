@@ -6,6 +6,7 @@ const port = process.env.PORT || 1010;
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const { authorize } = require('./auth/authorization');
 
 const usersRoutes = require('./routes/users');
 
@@ -17,6 +18,8 @@ app.use(cors({
 ));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+
+authorize();
 
 const auth = require('./middleware/auth');
 const { RegisterUser, LoginUser, getUserDetails, LogoutUser } = require('./controller/AuthController');
